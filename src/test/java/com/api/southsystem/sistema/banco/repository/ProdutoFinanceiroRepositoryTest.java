@@ -82,6 +82,5 @@ class ProdutoFinanceiroRepositoryTest {
                 .isNotNull()
                 .contains(chequeEspecial)
                 .contains(cartaoCredito);
-
     }
 }
