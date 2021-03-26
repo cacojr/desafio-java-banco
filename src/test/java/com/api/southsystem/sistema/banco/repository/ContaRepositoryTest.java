@@ -1,11 +1,7 @@
 package com.api.southsystem.sistema.banco.repository;
 
+import com.api.southsystem.sistema.banco.builder.ContaBuilder;
 import com.api.southsystem.sistema.banco.model.conta.Conta;
-import com.api.southsystem.sistema.banco.model.conta.ContaCorrente;
-import com.api.southsystem.sistema.banco.model.conta.ContaEmpresarial;
-import com.api.southsystem.sistema.banco.model.pessoa.Pessoa;
-import com.api.southsystem.sistema.banco.model.pessoa.PessoaFisica;
-import com.api.southsystem.sistema.banco.model.pessoa.PessoaJuridica;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @DisplayName("Testes para o Repository Conta")
@@ -31,11 +25,8 @@ class ContaRepositoryTest {
     @BeforeEach
     void setUp() {
 
-        Pessoa pessoaFisica = new PessoaFisica("Carlos Alberto","84306033287");
-        contaCorrente = new ContaCorrente(pessoaFisica);
-
-        Pessoa pessoaJuridica = new PessoaJuridica("Empresa do Carlos","12463960000177");
-        contaEmpresarial = new ContaEmpresarial(pessoaJuridica);
+        contaCorrente = ContaBuilder.criarContaCorrente();
+        contaEmpresarial = ContaBuilder.criarContaEmpresarial();
     }
 
     @Test
@@ -86,8 +77,6 @@ class ContaRepositoryTest {
                 .isNotNull()
                 .contains(contaEmpresa)
                 .contains(contaFisica);
-
-
     }
 
 }

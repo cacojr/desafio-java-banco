@@ -1,9 +1,7 @@
 package com.api.southsystem.sistema.banco.repository;
 
-import com.api.southsystem.sistema.banco.model.conta.Conta;
+import com.api.southsystem.sistema.banco.builder.PessoaBuilder;
 import com.api.southsystem.sistema.banco.model.pessoa.Pessoa;
-import com.api.southsystem.sistema.banco.model.pessoa.PessoaFisica;
-import com.api.southsystem.sistema.banco.model.pessoa.PessoaJuridica;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @DisplayName("Teste para o Repository Pessoa")
@@ -29,8 +26,8 @@ class PessoaRepositoryTest {
     @BeforeEach
     void setUp() {
 
-        pessoFisica = new PessoaFisica("Carlos Alberto","84306033287");
-        pessoJuridica = new PessoaJuridica("Empresa do Carlos","12463960000177");
+        pessoFisica = PessoaBuilder.criarPessoaFisica();
+        pessoJuridica = PessoaBuilder.criarPessoaJuridica();
     }
 
     @Test
