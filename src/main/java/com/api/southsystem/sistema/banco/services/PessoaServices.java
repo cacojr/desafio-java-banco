@@ -9,7 +9,6 @@ import com.api.southsystem.sistema.banco.model.pessoa.PessoaJuridica;
 import com.api.southsystem.sistema.banco.repository.PessoaRepository;
 import com.api.southsystem.sistema.banco.util.ConversorRepositoryDTO;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -38,7 +37,7 @@ public class PessoaServices extends ServicesAbstract<PessoaRepository,Pessoa,Lon
     }
 
     @Transactional
-    public Optional<PessoaDto> criarPessoa(PessoaDto pessoaDto) throws   NegocioException,Exception {
+    public PessoaDto criarPessoa(PessoaDto pessoaDto) throws   NegocioException,Exception {
 
         if(pessoaDto.getNome().isEmpty())
             throw  new NegocioException("Nome obrigatório");
@@ -61,8 +60,13 @@ public class PessoaServices extends ServicesAbstract<PessoaRepository,Pessoa,Lon
 
         contaServices.criarConta(pessoa);
 
-        return this.buscarPorId(pessoa.getId())
+        Optional<PessoaDto> pessoaResponse = this.buscarPorId(pessoa.getId())
                 .map(p -> this.conversorEntidadeDto(p));
+
+        if(pessoaResponse.isPresent())
+            return pessoaResponse.get();
+
+        return null;
     }
 
     private boolean isPessoaFisica(String numeroDocumento){
