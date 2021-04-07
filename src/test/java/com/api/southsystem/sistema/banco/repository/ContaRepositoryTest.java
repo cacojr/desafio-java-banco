@@ -3,9 +3,8 @@ package com.api.southsystem.sistema.banco.repository;
 import com.api.southsystem.sistema.banco.builder.ContaBuilder;
 import com.api.southsystem.sistema.banco.model.conta.Conta;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -25,8 +24,8 @@ class ContaRepositoryTest {
     @BeforeEach
     void setUp() {
 
-        contaCorrente = ContaBuilder.criarContaCorrente();
-        contaEmpresarial = ContaBuilder.criarContaEmpresarial();
+        contaCorrente = ContaBuilder.criarContaCorrenteComId();
+        contaEmpresarial = ContaBuilder.criarContaEmpresarialComId();
     }
 
     @Test
@@ -38,10 +37,6 @@ class ContaRepositoryTest {
         Assertions.assertThat(contaS)
                 .isNotEqualTo(null)
                 .isEqualTo(contaCorrente);
-
-        Assertions.assertThat(contaS.getId())
-                .isNotEqualTo(null)
-                .isEqualTo(contaCorrente.getId());
     }
 
     @Test
@@ -53,10 +48,6 @@ class ContaRepositoryTest {
         Assertions.assertThat(contaS)
                 .isNotEqualTo(null)
                 .isEqualTo(contaEmpresarial);
-
-        Assertions.assertThat(contaS.getId())
-                .isNotEqualTo(null)
-                .isEqualTo(contaEmpresarial.getId());
     }
 
     @Test

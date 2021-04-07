@@ -9,20 +9,25 @@ import com.api.southsystem.sistema.banco.model.produtofinanceiro.ProdutoFinancei
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class ProdutoFinanceiroBuilder {
 
     public static ProdutoFinanceiro criarChequeEspecial(){
-        return new ChequeEspecial(new BigDecimal(1000),ContaBuilder.criarContaCorrente());
+        ChequeEspecial chequeEspecial = new ChequeEspecial(new BigDecimal(1000),ContaBuilder.criarContaCorrenteComId());
+        chequeEspecial.setId(1L);
+        return chequeEspecial;
     }
 
     public static ProdutoFinanceiro criarCartaoCredito(){
-        return new CartaoCredito(new BigDecimal(1000),ContaBuilder.criarContaCorrente());
+        CartaoCredito cartaoCredito = new CartaoCredito(new BigDecimal(1000),ContaBuilder.criarContaCorrenteComId());
+        cartaoCredito.setId(2L);
+        return cartaoCredito;
     }
 
-    public static List<ProdutoFinanceiro> criarListaDeProdutosFinanceiro(){
-        List<ProdutoFinanceiro> produtos = Arrays.asList(
+    public static Collection<ProdutoFinanceiro> criarListaDeProdutosFinanceiro(){
+        Collection<ProdutoFinanceiro> produtos = Arrays.asList(
                 criarCartaoCredito(),
                 criarChequeEspecial()
         );

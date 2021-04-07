@@ -3,6 +3,7 @@ package com.api.southsystem.sistema.banco.services;
 
 import com.api.southsystem.sistema.banco.dto.ContaDto;
 import com.api.southsystem.sistema.banco.enums.TipoConta;
+import com.api.southsystem.sistema.banco.enums.TipoPessoa;
 import com.api.southsystem.sistema.banco.model.conta.Conta;
 import com.api.southsystem.sistema.banco.model.conta.ContaCorrente;
 import com.api.southsystem.sistema.banco.model.conta.ContaEmpresarial;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class ContaServices extends ServicesAbstract<ContaRepository, Conta,Long>  implements ConversorRepositoryDTO<ContaDto, Conta> {
 
     private final ProdutoFinanceiroServices produtoFinanceiroServices;
+
     private final ModelMapper modelMapper;
 
     ContaServices(ProdutoFinanceiroServices produtoFinanceiroServices,ModelMapper modelMapper){
@@ -29,13 +31,6 @@ public class ContaServices extends ServicesAbstract<ContaRepository, Conta,Long>
     }
 
 
-    public void criarConta(@NotNull Pessoa p) throws Exception{
-
-        Conta conta = (p.getTipo().equals(1) ? new ContaCorrente(p) : new ContaEmpresarial(p));
-        this.salvar(conta);
-
-        produtoFinanceiroServices.salvar(conta);
-    }
 
     public Collection<ContaDto> buscarContas() {
         List<ContaDto> contas = this.buscarTodos()
@@ -43,6 +38,14 @@ public class ContaServices extends ServicesAbstract<ContaRepository, Conta,Long>
                 .map(this::conversorEntidadeDto)
                 .collect(Collectors.toList());
         return contas;
+    }
+
+    public void criarConta(@NotNull Pessoa p) throws Exception{
+
+        Conta conta = (p.getTipo().equals(TipoPessoa.PESSOA_FISICA) ? new ContaCorrente(p) : new ContaEmpresarial(p));
+        conta = this.salvar(conta);
+
+        produtoFinanceiroServices.criarProdutos(conta);
     }
 
     @Override

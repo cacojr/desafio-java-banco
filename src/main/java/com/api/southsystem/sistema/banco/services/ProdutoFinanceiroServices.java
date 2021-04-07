@@ -16,16 +16,16 @@ import java.util.List;
 public class ProdutoFinanceiroServices extends ServicesAbstract<ProdutoFinanceiroRepository,ProdutoFinanceiro,Long>  {
 
 
-    public Collection<ProdutoFinanceiro> salvar(@NotNull Conta conta){
+    public Collection<ProdutoFinanceiro> criarProdutos(@NotNull Conta conta){
 
-        List<ProdutoFinanceiro> produtos = this.criarProdutos(conta);
+        List<ProdutoFinanceiro> produtos = this.criarProdutosFinanceiros(conta);
         if(produtos.isEmpty())
             return null;
 
         return this.salvarTodos(produtos);
     }
 
-    private List<ProdutoFinanceiro> criarProdutos(@NotNull Conta conta){
+    protected List<ProdutoFinanceiro> criarProdutosFinanceiros(@NotNull Conta conta){
 
         List<ProdutoFinanceiro> lista = new ArrayList<ProdutoFinanceiro>();
         if(conta.getPessoa() != null
@@ -43,8 +43,6 @@ public class ProdutoFinanceiroServices extends ServicesAbstract<ProdutoFinanceir
                 && conta.getPessoa().getScore() == 9 ){
             lista.add(new ChequeEspecial(new BigDecimal(5000),conta));
             lista.add(new CartaoCredito(new BigDecimal(15000),conta));
-        }else{
-            return null;
         }
 
         return lista;

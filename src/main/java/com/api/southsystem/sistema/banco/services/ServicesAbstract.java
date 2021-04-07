@@ -9,13 +9,15 @@ import java.util.Optional;
 public abstract class ServicesAbstract <R extends JpaRepository<T, ID>, T, ID>{
 
     @Autowired
-    private R repository;
+    protected R repository;
 
     public T salvar(T object){
         return repository.save(object);
     }
 
-    public List<T> salvarTodos(List<T> object){ return repository.saveAll(object); }
+    public List<T> salvarTodos(List<T> object){
+        return repository.saveAll(object);
+    }
 
     public List<T> buscarTodos(){
         return repository.findAll();
@@ -23,5 +25,9 @@ public abstract class ServicesAbstract <R extends JpaRepository<T, ID>, T, ID>{
 
     public Optional<T> buscarPorId(ID id){
         return repository.findById(id);
+    }
+
+    public R getRepository(){
+        return repository;
     }
 }

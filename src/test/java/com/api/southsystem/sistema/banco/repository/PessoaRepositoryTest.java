@@ -32,7 +32,7 @@ class PessoaRepositoryTest {
 
     @Test
     @DisplayName("Salva Pessoa Física com sucesso")
-    void salvarContaCorrenteSucesso(){
+    void salvarPessoaFisicaSucesso(){
 
         Pessoa pessoaSalva = pessoaRepository.save(pessoFisica);
 
@@ -47,7 +47,7 @@ class PessoaRepositoryTest {
 
     @Test
     @DisplayName("Salva Pessoa Jurídica com sucesso")
-    void salvarContaEmpresarialSucesso(){
+    void salvarPessoaJuridicaSucesso(){
 
         Pessoa pessoaSalva = pessoaRepository.save(pessoJuridica);
 
@@ -62,7 +62,7 @@ class PessoaRepositoryTest {
 
     @Test
     @DisplayName("Carregar Pessoas com sucesso")
-    void carregarContasSucesso() {
+    void carregarPessoasSucesso() {
 
         Pessoa pessoaFisicaSalva = pessoaRepository.save(pessoFisica);
         Pessoa pessoaJuridicaSalva = pessoaRepository.save(pessoJuridica);

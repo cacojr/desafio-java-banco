@@ -9,9 +9,11 @@ import com.api.southsystem.sistema.banco.model.pessoa.PessoaJuridica;
 import com.api.southsystem.sistema.banco.repository.PessoaRepository;
 import com.api.southsystem.sistema.banco.util.ConversorRepositoryDTO;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -19,8 +21,9 @@ import java.util.stream.Collectors;
 @Service
 public class PessoaServices extends ServicesAbstract<PessoaRepository,Pessoa,Long> implements ConversorRepositoryDTO<PessoaDto,Pessoa> {
 
-    private final ContaServices contaServices;
-    private final ModelMapper modelMapper;
+    private ContaServices contaServices;
+
+    private ModelMapper modelMapper;
 
     PessoaServices(ContaServices contaServices,ModelMapper modelMapper){
         this.contaServices = contaServices;
@@ -28,13 +31,14 @@ public class PessoaServices extends ServicesAbstract<PessoaRepository,Pessoa,Lon
     }
 
     public Collection<PessoaDto> buscarPessoas(){
-        return this.buscarTodos().stream()
+        List<Pessoa> pessoas = this.buscarTodos();
+        return pessoas.stream()
                 .map(this::conversorEntidadeDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public Optional<PessoaDto> criarPessoa(PessoaDto pessoaDto) throws   Exception {
+    public Optional<PessoaDto> criarPessoa(PessoaDto pessoaDto) throws   NegocioException,Exception {
 
         if(pessoaDto.getNome().isEmpty())
             throw  new NegocioException("Nome obrigatório");
@@ -47,13 +51,13 @@ public class PessoaServices extends ServicesAbstract<PessoaRepository,Pessoa,Lon
         if(isPessoaFisica(pessoaDto.getDocumento()))
             pessoa.setTipo(TipoPessoa.PESSOA_FISICA);
         else if(isPessoaJuridica(pessoaDto.getDocumento()))
-            pessoa.setTipo(TipoPessoa.PESSOA_FISICA);
+            pessoa.setTipo(TipoPessoa.PESSOA_JURIDICA);
         else
             throw new NegocioException("Documento Inválido");
 
         pessoa.setScore(this.gerarScore());
 
-        this.salvar(pessoa);
+        pessoa = this.salvar(pessoa);
 
         contaServices.criarConta(pessoa);
 
@@ -74,7 +78,7 @@ public class PessoaServices extends ServicesAbstract<PessoaRepository,Pessoa,Lon
     }
 
     private short gerarScore(){
-        return (short) new Random().nextInt(9);
+        return (short) new Random().nextInt(10);
     }
 
     @Override
@@ -87,6 +91,7 @@ public class PessoaServices extends ServicesAbstract<PessoaRepository,Pessoa,Lon
 
     @Override
     public PessoaDto conversorEntidadeDto(Pessoa origem) {
-        return modelMapper.map(origem, PessoaDto.class);
+        PessoaDto pessoaDto = modelMapper.map(origem, PessoaDto.class);
+        return pessoaDto;
     }
 }

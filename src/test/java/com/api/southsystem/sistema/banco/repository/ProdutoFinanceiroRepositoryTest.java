@@ -8,6 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.util.Collection;
 import java.util.List;
 
 @DataJpaTest
@@ -17,7 +19,7 @@ class ProdutoFinanceiroRepositoryTest {
     @Autowired
     private ProdutoFinanceiroRepository produtoRepository;
 
-    private List<ProdutoFinanceiro> produtosFinanceiro;
+    private Collection<ProdutoFinanceiro> produtosFinanceiro;
 
     @BeforeEach
     void setUp() {
@@ -43,7 +45,7 @@ class ProdutoFinanceiroRepositoryTest {
 
     @Test
     @DisplayName("Carregar Produtos Financeiro com sucesso")
-    void carregarContasSucesso() {
+    void carregarProdutosFinanceiroSucesso() {
 
         produtoRepository.saveAll(produtosFinanceiro);
 
