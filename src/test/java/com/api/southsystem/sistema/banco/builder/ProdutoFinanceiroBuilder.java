@@ -1,5 +1,7 @@
 package com.api.southsystem.sistema.banco.builder;
 
+import com.api.southsystem.sistema.banco.dto.ProdutoFinanceiroDto;
+import com.api.southsystem.sistema.banco.enums.TipoProdutoFinanceiro;
 import com.api.southsystem.sistema.banco.model.conta.Conta;
 import com.api.southsystem.sistema.banco.model.conta.ContaCorrente;
 import com.api.southsystem.sistema.banco.model.conta.ContaEmpresarial;
@@ -33,4 +35,13 @@ public class ProdutoFinanceiroBuilder {
         );
         return produtos;
     }
+
+    public static List<ProdutoFinanceiroDto> criarListaDeProdutosFinanceiroDto(){
+        List<ProdutoFinanceiroDto> produtos = Arrays.asList(
+                new ProdutoFinanceiroDto(TipoProdutoFinanceiro.CARTAO_CREDITO, new BigDecimal("2000")),
+                new ProdutoFinanceiroDto(TipoProdutoFinanceiro.CHEQUE_ESPECIAL, new BigDecimal("2000"))
+        );
+        return produtos;
+    }
+
 }

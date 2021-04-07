@@ -51,7 +51,7 @@ public class PessoaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         catch (Exception e) {
-            return ResponseEntity.badRequest().body("Erro Interno");
+            return new ResponseEntity<>("Erro Interno",HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

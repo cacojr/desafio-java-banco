@@ -3,7 +3,6 @@ package com.api.southsystem.sistema.banco.controller;
 import com.api.southsystem.sistema.banco.dto.PessoaDto;
 import com.api.southsystem.sistema.banco.enums.TipoPessoa;
 import com.api.southsystem.sistema.banco.exceptions.NegocioException;
-import com.api.southsystem.sistema.banco.model.produtofinanceiro.ProdutoFinanceiro;
 import com.api.southsystem.sistema.banco.services.ContaServices;
 import com.api.southsystem.sistema.banco.services.PessoaServices;
 import com.api.southsystem.sistema.banco.services.ProdutoFinanceiroServices;
@@ -11,30 +10,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.validateMockitoUsage;
 import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(PessoaController.class)
